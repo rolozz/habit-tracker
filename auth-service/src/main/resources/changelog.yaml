@@ -1,0 +1,23 @@
+databaseChangeLog:
+    - changeSet:
+          id: 02_2024-09-12_init-schema
+          author: Molodkin Viktor
+          failOnError: true
+          validCheckSum: ANY
+          changes:
+              - sqlFile:
+                    dbms: postgresql
+                    scriptComments: true
+                    splitStatements: true
+                    path: ./changelog/sql/01/01_2024-09-12_init-schema.sql
+    - changeSet:
+          id: 02_2024-09-12_insert_data
+          author: Molodkin Viktor
+          failOnError: true
+          validCheckSum: ANY
+          changes:
+              - sqlFile:
+                    dbms: postgresql
+                    scriptComments: true
+                    splitStatements: true
+                    path: ./changelog/sql/02/02_2024-09-16_insert_data.sql

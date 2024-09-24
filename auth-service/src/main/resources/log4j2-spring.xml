@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+    <Properties>
+        <Property name="pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} [%level] - %msg%n</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern}" />
+        </Console>
+        <Jdbc name="databaseAppender" tableName="user_activity">
+            <DriverManager connectionString="jdbc:postgresql://localhost:5432/auth-service"
+                           driverClassName="org.postgresql.Driver"
+                           username="postgres"
+                           password="postgres"  />
+            <Column name="eventdate" isEventTimestamp="true" />
+            <Column name="level" pattern="%level" isUnicode="false" />
+            <Column name="message" pattern="%message" isUnicode="false" />
+        </Jdbc>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info" additivity="false">
+            <appender-ref ref="console" />
+        </Root>
+        <Logger name="habittracker.authservice.util.logging" level="info">
+            <appender-ref ref="databaseAppender"/>
+        </Logger>
+    </Loggers>
+</Configuration>

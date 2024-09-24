@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: 'postgres:latest'
+    ports:
+      - 5434:5432
+    environment:
+      - 'POSTGRES_DB=user-service'
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=root'

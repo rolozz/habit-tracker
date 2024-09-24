@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Strougalsky
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_task
+                  name: id
+                  type: INT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  name: status
+                  type: SMALLINT
+              - column:
+                  name: start_date
+                  type: DATETIME
+              - column:
+                  name: stop_date
+                  type: DATETIME
+              - column:
+                  constraints:
+                    nullable: false
+                  name: work_duration
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: break_duration
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: n_cycles
+                  type: INT
+              - column:
+                  name: user_id
+                  type: BIGINT
+            tableName: task
+

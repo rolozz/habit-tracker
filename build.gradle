@@ -1,0 +1,77 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
+buildscript {
+    ext {
+        springBootVersion = '3.1.0'
+        checkstyleVersion = '10.12.4'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "com.puppycrawl.tools:checkstyle:${checkstyleVersion}"
+    }
+}
+
+plugins {
+    id("org.sonarqube") version "5.1.0.4882"
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'checkstyle'
+
+    group = 'com.example.habittracker'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '17'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+
+    dependencies {
+        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+    }
+
+    dependencies {
+        implementation 'org.springframework.kafka:spring-kafka'
+    }
+
+
+    checkstyle {
+        toolVersion = '10.12.4'
+        configFile = file("${project.projectDir.parentFile}/config/checkstyle/checkstyle.xml")
+    }
+
+    tasks.withType(Checkstyle).configureEach {
+        reports {
+            html.required.set(true)
+            xml.required.set(true)
+        }
+    }
+
+    tasks.named('checkstyleMain') {
+        source = fileTree('src/main/java')
+        include '**/*.java'
+    }
+
+    tasks.named('checkstyleTest') {
+        source = fileTree('src/test/java')
+        include '**/*.java'
+    }
+}
+// Указываем основной класс приложения для плагина Spring Boot
+tasks.withType(BootJar) {
+    mainClass = 'com.example.habittracker.eurekaserver.EurekaServerApplication'  // Замените на путь к вашему классу
+}
+subprojects {
+    // Здесь можно добавить специфические настройки для подмодулей, если необходимо
+}

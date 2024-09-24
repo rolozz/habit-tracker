@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: auth-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/auth-service
+    username: postgres
+    password: postgres
+  liquibase:
+#    если не получилось запустить сделать drop public схемы в БД auth-service
+    change-log: classpath:changelog.yaml
+    enabled: true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          auto: none
+        show_sql: true
+server:
+  port: 8189
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+management:
+  server:
+    port: 8192
+  endpoints:
+    web:
+      exposure:
+        include: info, metrics, caches
+  info:
+    build:
+      enabled: false
+  endpoint:
+    info:
+      enabled: true
+      cache:
+        time-to-live: 300000

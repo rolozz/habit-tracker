@@ -1,0 +1,66 @@
+##Eureka properties
+eureka:
+  client:
+    enabled: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 10
+    health-check-url-path: /actuator/health
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  endpoint:
+    health:
+      show-details: always
+
+##General application status (End point)
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: health, metrics, env, beans
+#
+#server:
+#  port: 0
+
+spring:
+  application:
+    name: task-service
+
+    kafka:
+      bootstrap-servers: localhost:9092
+      producer:
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+  #Database properties
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: root
+    username: postgres
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5433}/postgres
+  #Hibernate properties
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  #ConfigServer properties
+  #  config:
+  #    import: optional:configserver:http://localhost:8888
+
+  #Springdoc properties
+  #springdoc:
+  #  api-docs:
+  #    path: /api-docs
+
+  #Liquibase properties
+  liquibase:
+    change-log: classpath:db.changelog/db.changelog-master.yaml
+    contexts: dev
+    enabled: true
