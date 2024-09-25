@@ -1,11 +1,27 @@
 version: '3.9'
 
 services:
-  postgres:
+  user-service:
     image: 'postgres:latest'
     ports:
-      - 5434:5432
+      - "5434:5432"
     environment:
       - 'POSTGRES_DB=user-service'
       - 'POSTGRES_USER=postgres'
       - 'POSTGRES_PASSWORD=root'
+  task-service:
+    image: 'postgres:latest'
+    ports:
+      - "5433:5432"
+    environment:
+      - 'POSTGRES_DB=postgres'
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=root'
+  auth-service:
+    image: 'postgres:latest'
+    ports:
+      - "5432:5432"
+    environment:
+      - 'POSTGRES_DB=auth-service'
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=postgres'
