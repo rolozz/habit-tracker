@@ -24,8 +24,8 @@ management:
 #      exposure:
 #        include: health, metrics, env, beans
 #
-#server:
-#  port: 0
+server:
+  port: 0
 
 spring:
   application:
